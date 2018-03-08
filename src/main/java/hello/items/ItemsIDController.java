@@ -33,14 +33,14 @@ public class ItemsIDController {
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<Item> update(@PathVariable long id, @RequestBody Item newItem) {
-        Item result = itemsRepository.update(id, newItem);
+        String result = itemsRepository.update(id, newItem);
         if (result == null) {
             return ResponseEntity.notFound().build();
         } else {
             URI location = UriComponentsBuilder.fromPath("/items/")
-                    .path(String.valueOf(result.getId()))
+                    .path(String.valueOf(id))
                     .build().toUri();
-            return ResponseEntity.created(location).body(result);
+            return ResponseEntity.created(location).body(new Item(id, result));
         }
     }
 

@@ -12,7 +12,7 @@ public interface ItemsRepository {
 
     Item getItemById(long id);
 
-    Item update(long id, Item newItem);
+    String update(long id, Item newItem);
 
     String delete(long id);
 }
