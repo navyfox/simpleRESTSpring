@@ -33,22 +33,22 @@ public class ItemsIDController {
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<Item> update(@PathVariable long id, @RequestBody Item newItem) {
-        String result = itemsRepository.update(id, newItem);
+        Item result = itemsRepository.update(id, newItem);
         if (result == null) {
             return ResponseEntity.notFound().build();
         } else {
             URI location = UriComponentsBuilder.fromPath("/items/")
                     .path(String.valueOf(id))
                     .build().toUri();
-            return ResponseEntity.created(location).body(new Item(id, result));
+            return ResponseEntity.created(location).body(result);
         }
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity delete(@PathVariable long id) {
-        String deleted = itemsRepository.delete(id);
-        if (deleted != null) {
+        boolean deleted = itemsRepository.delete(id);
+        if (deleted) {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();

@@ -6,38 +6,49 @@ import java.util.*;
 
 public class SampleItemsRepository implements ItemsRepository {
 
-    private Map<Long, String> items = new HashMap<>();
+    private Map<Long, Item> items = new HashMap<>();
 
     public SampleItemsRepository() {
-        items.put((long) 1, "one");
-        items.put((long) 2, "two");
-        items.put((long) 3, "three");
+        items.put((long) 1, new Item(1, "one"));
+        items.put((long) 2, new Item(2,"two"));
+        items.put((long) 3, new Item(3,"three"));
     }
     @Override
-    public Map<Long, String> getAllItems() {
-        return Collections.unmodifiableMap(items);
+    public Collection<Item> getAllItems() {
+        return Collections.unmodifiableCollection(items.values());
     }
 
     @Override
     public Item create(final Item newItem) {
-        items.put(newItem.getId(), newItem.getName());
+        items.put(newItem.getId(), newItem);
         return newItem;
     }
 
     @Override
     public Item getItemById(final long id) {
-        return new Item(id, items.get(id));
+        if (items.containsKey(id)) {
+            return items.get(id);
+        }
+        return null;
 
     }
 
     @Override
-    public String update(final long id, final Item newItem) {
-        return items.put(id, newItem.getName());
+    public Item update(final long id, final Item newItem) {
+        if (items.containsKey(id)) {
+            items.put(id, newItem);
+            return newItem;
+        }
+        return null;
     }
 
     @Override
-    public String delete(final long id) {
-        return items.remove(id);
+    public boolean delete(final long id) {
+        if (items.containsKey(id)) {
+            items.remove(id);
+            return true;
+        }
+        return false;
     }
 }
 

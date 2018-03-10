@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Map;
+import java.util.Collection;
 
 @Controller
 @RequestMapping("/items")
@@ -18,7 +18,7 @@ public class ItemsController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public Map<Long, String> list() {
+    public Collection list() {
         return itemsRepository.getAllItems();
     }
 

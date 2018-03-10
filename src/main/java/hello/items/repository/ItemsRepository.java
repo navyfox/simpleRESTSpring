@@ -2,17 +2,19 @@ package hello.items.repository;
 
 import hello.items.model.Item;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 public interface ItemsRepository {
 
-    Map<Long, String> getAllItems();
+    Collection getAllItems();
 
     Item create(Item newItem);
 
     Item getItemById(long id);
 
-    String update(long id, Item newItem);
+    Item update(long id, Item newItem);
 
-    String delete(long id);
+    boolean delete(long id);
 }
